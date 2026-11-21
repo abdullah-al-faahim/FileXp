@@ -62,6 +62,9 @@
   .btn-dl .t2 { display: block; font-size: 13px; opacity: .85; }
   .btn-ghost { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.05); text-decoration: none; font-weight: 600; }
   .btn-ghost:hover { background: rgba(255,255,255,.10); }
+  .store-badge { display: inline-flex; border-radius: 10px; transition: transform .15s ease; }
+  .store-badge:hover { transform: translateY(-2px); }
+  .store-badge img { display: block; height: 64px; width: auto; }
   .fine { margin-top: 16px; font-size: 14px; color: var(--muted); }
   .fine a { color: var(--sub); }
   .shot-hero { position: relative; margin: 0 auto; max-width: 1080px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,.16); box-shadow: 0 40px 100px rgba(0,0,0,.55); }
@@ -136,6 +139,9 @@
           <svg width="30" height="30" viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><rect width="14.5" height="14.5" rx="1.5"/><rect x="17.5" width="14.5" height="14.5" rx="1.5"/><rect y="17.5" width="14.5" height="14.5" rx="1.5"/><rect x="17.5" y="17.5" width="14.5" height="14.5" rx="1.5"/></svg>
           <span><span class="t1">Download for Windows</span><span class="t2"><span class="js-version">Latest version</span> · Free · 64-bit</span></span>
         </a>
+        <a class="store-badge" href="https://apps.microsoft.com/detail/9NHB2MKLL81Q?mode=direct" aria-label="Get FileXP from the Microsoft Store">
+          <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft" width="200" height="72">
+        </a>
         <a class="btn-ghost" href="https://github.com/abdullah-al-faahim/FileXp/releases">
           <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
           All releases
@@ -203,7 +209,8 @@
       <details><summary>Windows says “Windows protected your PC”. Is it safe?</summary><p>FileXp isn't code-signed yet, so SmartScreen doesn't recognise it. Click <b>More info → Run anyway</b>. Only download FileXp from this site or its official GitHub releases page.</p></details>
       <details><summary>Do I need admin rights or .NET installed?</summary><p>No. The installer installs for your user account only, and includes everything it needs. You can also use the portable zip, which keeps its settings in a <code>Data</code> folder next to the exe.</p></details>
       <details><summary>How do I make FileXp my default file explorer, and undo it?</summary><p>Open <b>⋯ → Settings → Make FileXp the default</b>. Folders, drives, Win+E and This PC then open in FileXp. <b>Restore Windows Explorer</b> in the same place undoes it, and uninstalling FileXp does that automatically too.</p></details>
-      <details><summary>How does search work without Everything or Windows Search?</summary><p>FileXp builds its own compact index of every file and folder on your fixed drives, about 84&nbsp;MB for 1.8 million files. It keeps the index up to date while it runs, and re-scans in the background when the index is older than 6 hours. You can turn it off or rebuild it in Settings.</p></details>
+      <details><summary>How does search work without Everything or Windows Search?</summary><p>FileXp builds its own compact index of every file and folder on your fixed drives, about 84&nbsp;MB for 1.8 million files. It keeps the index up to date while it runs, and re-scans in the background when the index is older than 6 hours. It runs automatically, with nothing to set up.</p></details>
+      <details><summary>Is FileXp on the Microsoft Store?</summary><p>Yes, as <b>FileXP - File Explorer</b>. The Store version installs and updates automatically. One difference: Windows doesn't let Store apps change which app opens folders, so to make FileXp your default file explorer, use the installer from this site.</p></details>
       <details><summary>Does it need 7-Zip?</summary><p>ZIP works out of the box. If <a href="https://www.7-zip.org/">7-Zip</a> is installed, FileXp uses it automatically for 7z, rar, tar.gz, iso and dozens of other formats.</p></details>
     </div>
   </div>
@@ -218,6 +225,9 @@
       <a class="btn-dl js-download" href="https://github.com/abdullah-al-faahim/FileXp/releases/latest/download/FileXp-Setup.exe">
         <svg width="30" height="30" viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><rect width="14.5" height="14.5" rx="1.5"/><rect x="17.5" width="14.5" height="14.5" rx="1.5"/><rect y="17.5" width="14.5" height="14.5" rx="1.5"/><rect x="17.5" y="17.5" width="14.5" height="14.5" rx="1.5"/></svg>
         <span><span class="t1">Download for Windows</span><span class="t2"><span class="js-version">Latest version</span> · Free · 64-bit</span></span>
+      </a>
+      <a class="store-badge" href="https://apps.microsoft.com/detail/9NHB2MKLL81Q?mode=direct" aria-label="Get FileXP from the Microsoft Store">
+        <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft" width="200" height="72">
       </a>
     </div>
   </div>

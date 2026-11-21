@@ -6,6 +6,10 @@
   <a href="https://github.com/abdullah-al-faahim/FileXp/releases/latest/download/FileXp-Setup.exe">
     <img src="docs/assets/download-button.svg" alt="Download FileXp for Windows" height="64">
   </a>
+  &nbsp;
+  <a href="https://apps.microsoft.com/detail/9NHB2MKLL81Q?mode=direct">
+    <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft" height="64">
+  </a>
 </p>
 
 <p align="center">
@@ -25,6 +29,7 @@
 
 - **Installer:** [`FileXp-Setup.exe`](https://github.com/abdullah-al-faahim/FileXp/releases/latest/download/FileXp-Setup.exe) (about 43 MB). It installs for your user account only, with no admin rights needed.
 - **Portable:** a zip on the [releases page](https://github.com/abdullah-al-faahim/FileXp/releases/latest) that runs from any folder or USB stick and keeps its settings next to the exe.
+- **Microsoft Store:** [FileXP - File Explorer](https://apps.microsoft.com/detail/9NHB2MKLL81Q?mode=direct) installs and updates automatically. The Store version can't become your default file explorer, because Windows doesn't allow Store apps to change that; use the installer for that.
 
 > FileXp isn't code-signed yet, so Windows SmartScreen may show "Windows protected your PC". Click **More info → Run anyway**.
 
