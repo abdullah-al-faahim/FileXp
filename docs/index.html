@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FileXp — the lightning-fast file explorer for Windows</title>
+<meta name="description" content="FileXp is a free file explorer for Windows 10 and 11 with Finder-style column view, instant search across millions of files, built-in 7-Zip and the Windows 7 details pane.">
+<meta property="og:title" content="FileXp — the lightning-fast file explorer for Windows">
+<meta property="og:description" content="Finder column view, instant search across millions of files, 7-Zip built in. Free for Windows 10 &amp; 11.">
+<meta property="og:image" content="https://abdullah-al-faahim.github.io/FileXp/assets/cover.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="assets/icon-256.png">
+<style>
+  :root {
+    --bg: #0B1026; --bg2: #111735; --card: #151C40; --line: rgba(255,255,255,.10);
+    --text: #EEF1FF; --sub: #A9B3E0; --muted: #7D87B8;
+    --blue: #38A1FF; --indigo: #4D6BFE; --violet: #6B3CF2; --amber: #FFB020;
+    --grad: linear-gradient(135deg, var(--blue), var(--indigo) 55%, var(--violet));
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.6 "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+  /* nav */
+  nav { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(14px); background: rgba(11,16,38,.72); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; gap: 24px; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 19px; text-decoration: none; }
+  .brand img { width: 30px; height: 30px; }
+  nav .links { display: flex; gap: 22px; margin-left: auto; font-size: 15px; }
+  nav .links a { text-decoration: none; color: var(--sub); }
+  nav .links a:hover { color: var(--text); }
+  @media (max-width: 720px) { nav .links a.opt { display: none; } }
+
+  /* hero */
+  .hero { position: relative; overflow: hidden; padding: 88px 0 40px; }
+  .hero::before, .hero::after { content: ""; position: absolute; border-radius: 50%; filter: blur(90px); opacity: .55; z-index: -1; }
+  .hero::before { width: 620px; height: 620px; background: #2E5BFF; left: -220px; top: -260px; }
+  .hero::after { width: 680px; height: 680px; background: #7B3DF5; right: -260px; top: 120px; opacity: .45; }
+  .hero-grid { display: grid; grid-template-columns: 1fr; gap: 56px; text-align: center; }
+  .hero img.logo { width: 112px; height: 112px; filter: drop-shadow(0 18px 36px rgba(40,30,140,.55)); }
+  h1 { font-family: "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif; font-size: clamp(44px, 7vw, 80px); line-height: 1.02; margin: 18px 0 14px; letter-spacing: -1.5px; }
+  h1 .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { font-size: clamp(18px, 2.2vw, 22px); color: var(--sub); max-width: 760px; margin: 0 auto 34px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; align-items: center; }
+  .btn-dl {
+    display: inline-flex; align-items: center; gap: 16px; padding: 16px 30px 16px 26px; border-radius: 999px;
+    background: var(--grad); color: #fff; text-decoration: none; box-shadow: 0 14px 40px rgba(77,107,254,.45), inset 0 1px 0 rgba(255,255,255,.35);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-dl:hover { transform: translateY(-2px); box-shadow: 0 18px 48px rgba(77,107,254,.6), inset 0 1px 0 rgba(255,255,255,.35); }
+  .btn-dl svg { flex: none; }
+  .btn-dl .t1 { display: block; font-weight: 700; font-size: 20px; line-height: 1.15; }
+  .btn-dl .t2 { display: block; font-size: 13px; opacity: .85; }
+  .btn-ghost { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.05); text-decoration: none; font-weight: 600; }
+  .btn-ghost:hover { background: rgba(255,255,255,.10); }
+  .fine { margin-top: 16px; font-size: 14px; color: var(--muted); }
+  .fine a { color: var(--sub); }
+  .shot-hero { position: relative; margin: 0 auto; max-width: 1080px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,.16); box-shadow: 0 40px 100px rgba(0,0,0,.55); }
+  .shot-hero img { display: block; width: 100%; height: auto; }
+
+  /* sections */
+  section { padding: 84px 0; }
+  .eyebrow { color: var(--blue); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: 13px; text-align: center; }
+  h2 { font-family: "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif; font-size: clamp(30px, 4vw, 44px); line-height: 1.1; text-align: center; margin: 10px 0 14px; letter-spacing: -.5px; }
+  .sub { color: var(--sub); text-align: center; max-width: 680px; margin: 0 auto 48px; font-size: 18px; }
+
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 960px) { .features { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .features { grid-template-columns: 1fr; } }
+  .card { background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015)); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+  .card .ic { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: var(--grad); margin-bottom: 16px; box-shadow: 0 8px 22px rgba(77,107,254,.35); }
+  .card h3 { margin: 0 0 6px; font-size: 19px; }
+  .card p { margin: 0; color: var(--sub); font-size: 15.5px; }
+
+  .stats { background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; text-align: center; }
+  @media (max-width: 820px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+  .stat b { display: block; font-family: "Segoe UI Variable Display", "Segoe UI", sans-serif; font-size: clamp(34px, 4.5vw, 52px); line-height: 1.1; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .stat span { color: var(--sub); font-size: 15px; }
+  .stats .note { text-align: center; color: var(--muted); font-size: 14px; margin-top: 26px; }
+
+  .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+  @media (max-width: 760px) { .gallery { grid-template-columns: 1fr; } }
+  .gallery figure { margin: 0; }
+  .gallery img { width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid rgba(255,255,255,.14); box-shadow: 0 20px 50px rgba(0,0,0,.4); }
+  .gallery figcaption { color: var(--sub); font-size: 15px; margin-top: 10px; text-align: center; }
+
+  .faq { max-width: 820px; margin: 0 auto; }
+  details { border: 1px solid var(--line); border-radius: 14px; padding: 18px 22px; margin-bottom: 12px; background: rgba(255,255,255,.03); }
+  summary { cursor: pointer; font-weight: 600; font-size: 17px; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; float: right; color: var(--blue); font-size: 22px; line-height: 1; }
+  details[open] summary::after { content: "–"; }
+  details p { color: var(--sub); margin: 12px 0 0; }
+  code { background: rgba(255,255,255,.08); padding: 1px 6px; border-radius: 6px; font-size: .92em; }
+
+  .final { text-align: center; }
+  .final .cta { margin-top: 8px; }
+  footer { border-top: 1px solid var(--line); padding: 30px 0 40px; color: var(--muted); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center; }
+  footer a { color: var(--sub); text-decoration: none; }
+  footer a:hover { color: var(--text); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#"><img src="assets/icon-256.png" alt="">FileXp</a>
+    <div class="links">
+      <a class="opt" href="#features">Features</a>
+      <a class="opt" href="#speed">Speed</a>
+      <a class="opt" href="#screenshots">Screenshots</a>
+      <a href="https://github.com/abdullah-al-faahim/FileXp/releases">Releases</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <img class="logo" src="assets/icon-256.png" alt="FileXp icon">
+      <h1>The <span class="grad">lightning-fast</span><br>file explorer for Windows</h1>
+      <p class="lead">Finder-style column view, instant search across millions of files, built-in 7-Zip and the Windows&nbsp;7 details pane, in a native app that's free to download.</p>
+      <div class="cta">
+        <a class="btn-dl js-download" href="https://github.com/abdullah-al-faahim/FileXp/releases/latest/download/FileXp-Setup.exe">
+          <svg width="30" height="30" viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><rect width="14.5" height="14.5" rx="1.5"/><rect x="17.5" width="14.5" height="14.5" rx="1.5"/><rect y="17.5" width="14.5" height="14.5" rx="1.5"/><rect x="17.5" y="17.5" width="14.5" height="14.5" rx="1.5"/></svg>
+          <span><span class="t1">Download for Windows</span><span class="t2"><span class="js-version">Latest version</span> · Free · 64-bit</span></span>
+        </a>
+        <a class="btn-ghost" href="https://github.com/abdullah-al-faahim/FileXp/releases">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          All releases
+        </a>
+      </div>
+      <p class="fine">Windows 10 &amp; 11 · no admin rights needed · <a href="https://github.com/abdullah-al-faahim/FileXp/releases/latest">portable zip &amp; all releases</a></p>
+    </div>
+    <div class="shot-hero"><img src="assets/screenshot-columns.png" alt="FileXp column view showing folders from This PC down to a photo preview" width="1725" height="1054"></div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <div class="eyebrow">Features</div>
+    <h2>Everything you need to manage a PC</h2>
+    <p class="sub">FileXp runs on the real Windows shell, so copying, context menus, thumbnails and the Recycle Bin behave exactly like File Explorer. It's just faster, and nicer to use.</p>
+    <div class="features">
+      <div class="card"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16"/></svg></div><h3>Finder column view</h3><p>Browse the whole path from This PC in one glance, with a live preview column. Plus icons, details, list and gallery views.</p></div>
+      <div class="card"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg></div><h3>Instant search</h3><p>A built-in index of every file on your drives. Search 1.8 million files in milliseconds, with wildcards, <code>ext:</code> filters and up to a million results.</p></div>
+      <div class="card"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16v13H4zM9 3h6l1 4H8z"/><path d="M12 11v5M10 14l2 2 2-2"/></svg></div><h3>7-Zip built in</h3><p>Extract 7z, zip, rar, tar.gz, iso and more, create .7z and .zip archives, and test them. Password prompts and progress included.</p></div>
+      <div class="card"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 15h18M7 18h4"/></svg></div><h3>Windows 7 details pane</h3><p>Exact sizes, dates, attributes, image dimensions and folder totals at the bottom of the window, for whatever you select.</p></div>
+      <div class="card"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div><h3>Quick Look &amp; previews</h3><p>Press Space to preview images, video, audio, text and code. The preview pane and gallery show thumbnails for everything else.</p></div>
+      <div class="card"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div><h3>Your default explorer</h3><p>One click makes folders, drives and Win+E open in FileXp. One click (or uninstalling) gives them back to File Explorer.</p></div>
+      <div class="card"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20M7 3h10"/></svg></div><h3>Tabs, tags &amp; pins</h3><p>Tabs and multiple windows, Finder-style colour tags, pinned folders, and breadcrumbs with Windows 7 chevron menus.</p></div>
+      <div class="card"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M8 7h12M8 12h12M8 17h12"/><path d="M4 7h.01M4 12h.01M4 17h.01"/></svg></div><h3>Real file operations</h3><p>Copy, move, recycle and rename through the Windows engine: native progress dialogs, Undo, long paths, network shares and drag and drop.</p></div>
+      <div class="card"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></div><h3>Light &amp; dark</h3><p>Follows your Windows theme, with Windows 11 rounded corners, snap layouts and a tab bar that doubles as the title bar.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="speed" class="stats">
+  <div class="wrap">
+    <div class="eyebrow">Speed</div>
+    <h2>Built to be instant</h2>
+    <p class="sub">Measured on a real PC with 1,771,955 files across three drives.</p>
+    <div class="stat-grid">
+      <div class="stat"><b>2–10 ms</b><span>typical search, whole PC</span></div>
+      <div class="stat"><b>1,000,000</b><span>results per search</span></div>
+      <div class="stat"><b>50 ms</b><span>to load the search index</span></div>
+      <div class="stat"><b>0.4 s</b><span>to open a folder in a running FileXp</span></div>
+    </div>
+    <p class="note">Folders are listed straight from NTFS and every view is virtualized, so a folder with 100,000 files only draws what you can see.</p>
+  </div>
+</section>
+
+<section id="screenshots">
+  <div class="wrap">
+    <div class="eyebrow">Screenshots</div>
+    <h2>Five ways to see your files</h2>
+    <p class="sub">Switch views with Ctrl+1 to Ctrl+5.</p>
+    <div class="gallery">
+      <figure><img src="assets/screenshot-columns.png" alt="Column view" loading="lazy" width="1725" height="1054"><figcaption>Columns: the whole path at a glance, with a preview</figcaption></figure>
+      <figure><img src="assets/screenshot-icons.png" alt="Icons view with thumbnails" loading="lazy" width="1725" height="1054"><figcaption>Icons: live thumbnails at any size</figcaption></figure>
+      <figure><img src="assets/screenshot-details.png" alt="Details view with details pane" loading="lazy" width="1725" height="1054"><figcaption>Details: sortable columns and the Windows 7 details pane</figcaption></figure>
+      <figure><img src="assets/screenshot-gallery.png" alt="Gallery view" loading="lazy" width="1725" height="1054"><figcaption>Gallery: a big preview with a filmstrip</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="eyebrow">FAQ</div>
+    <h2>Questions</h2>
+    <div class="faq">
+      <details><summary>Windows says “Windows protected your PC”. Is it safe?</summary><p>FileXp isn't code-signed yet, so SmartScreen doesn't recognise it. Click <b>More info → Run anyway</b>. Only download FileXp from this site or its official GitHub releases page.</p></details>
+      <details><summary>Do I need admin rights or .NET installed?</summary><p>No. The installer installs for your user account only, and includes everything it needs. You can also use the portable zip, which keeps its settings in a <code>Data</code> folder next to the exe.</p></details>
+      <details><summary>How do I make FileXp my default file explorer, and undo it?</summary><p>Open <b>⋯ → Settings → Make FileXp the default</b>. Folders, drives, Win+E and This PC then open in FileXp. <b>Restore Windows Explorer</b> in the same place undoes it, and uninstalling FileXp does that automatically too.</p></details>
+      <details><summary>How does search work without Everything or Windows Search?</summary><p>FileXp builds its own compact index of every file and folder on your fixed drives, about 84&nbsp;MB for 1.8 million files. It keeps the index up to date while it runs, and re-scans in the background when the index is older than 6 hours. You can turn it off or rebuild it in Settings.</p></details>
+      <details><summary>Does it need 7-Zip?</summary><p>ZIP works out of the box. If <a href="https://www.7-zip.org/">7-Zip</a> is installed, FileXp uses it automatically for 7z, rar, tar.gz, iso and dozens of other formats.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <img src="assets/icon-256.png" alt="" width="84" height="84">
+    <h2>Get FileXp</h2>
+    <p class="sub">Free, and made for Windows 10 &amp; 11.</p>
+    <div class="cta">
+      <a class="btn-dl js-download" href="https://github.com/abdullah-al-faahim/FileXp/releases/latest/download/FileXp-Setup.exe">
+        <svg width="30" height="30" viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><rect width="14.5" height="14.5" rx="1.5"/><rect x="17.5" width="14.5" height="14.5" rx="1.5"/><rect y="17.5" width="14.5" height="14.5" rx="1.5"/><rect x="17.5" y="17.5" width="14.5" height="14.5" rx="1.5"/></svg>
+        <span><span class="t1">Download for Windows</span><span class="t2"><span class="js-version">Latest version</span> · Free · 64-bit</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 abdullah-al-faahim</span>
+    <span><a href="https://github.com/abdullah-al-faahim/FileXp">GitHub</a> · <a href="https://github.com/abdullah-al-faahim/FileXp/releases">Releases</a> · <a href="https://github.com/abdullah-al-faahim/FileXp/issues">Report an issue</a></span>
+  </div>
+</footer>
+
+<script>
+  // show the latest version on the download buttons (falls back to "Latest version" if the API is unreachable)
+  fetch("https://api.github.com/repos/abdullah-al-faahim/FileXp/releases/latest")
+    .then(r => r.ok ? r.json() : null)
+    .then(rel => { if (rel && rel.tag_name) document.querySelectorAll(".js-version").forEach(e => e.textContent = rel.tag_name); })
+    .catch(() => {});
+</script>
+</body>
+</html>
