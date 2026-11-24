@@ -15,6 +15,7 @@
 <p align="center">
   <a href="https://abdullah-al-faahim.github.io/FileXp/"><b>Website</b></a> ·
   <a href="https://github.com/abdullah-al-faahim/FileXp/releases/latest">All downloads</a> ·
+  <a href="https://apps.microsoft.com/detail/9NHB2MKLL81Q?mode=direct">Microsoft Store</a> ·
   <a href="#features">Features</a> ·
   <a href="https://github.com/abdullah-al-faahim/FileXp/issues">Report an issue</a>
 </p>
